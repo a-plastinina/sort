@@ -1,22 +1,29 @@
-public class SortFactory: ICommand
+using Sort.App;
+
+namespace Sort.Infrastructure;
+
+public class Application
 {
     private readonly string _sortName;
     private readonly string _sourceFilepath;
     private readonly string _resultFilePath;
 
-    public SortFactory(string sortName, string sourceFilepath, string resultFilePath)
+    public Application(string sortName, string sourceFilepath, string resultFilePath)
     {
         _sortName = sortName;
         _sourceFilepath = sourceFilepath;
         _resultFilePath = resultFilePath;
     }
-    public void Execute()
+    
+    public void Run()
     {
         var data = ReadArray();
-        IoC.Resolve<ICommand>(_sortName, data).Execute();
+        IoC.Resolve<AbstactSortFactory>($"Factory.{_sortName}", _sortName)
+            .CreateCommand(data)
+            .Execute();
         WriteArray(data);
     }
-
+    
     private int[] ReadArray()
     {
         using var file = new FileHelper(_sourceFilepath);

@@ -7,9 +7,9 @@ public class IoC
     public class RegisterCommand<T> : ICommand
     {
         private readonly string _key;
-        private Func<object[], T> _func;
+        private Func<object[], object> _func;
         
-        public RegisterCommand(string key, Func<object[], T> func)
+        public RegisterCommand(string key, Func<object[], object> func)
         {
             if (string.IsNullOrWhiteSpace(key))
                 throw new NullReferenceException(nameof(key));
@@ -31,7 +31,7 @@ public class IoC
 
         if (key == "IoC.Register")
         {
-            object cmd = new RegisterCommand<T>(args[0].ToString(), (Func<object[], T>)args[1]);
+            object cmd = new RegisterCommand<T>(args[0].ToString(), (Func<object[], object>)args[1]);
             return (T)cmd;
         }
 
