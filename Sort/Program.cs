@@ -32,27 +32,31 @@ IoC.Resolve<ICommand>("IoC.Register", "Sort.Merged"
 
 /// вариант 1
 IoC.Resolve<ICommand>("IoC.Register", "Factory.SortInserted"
-        , (object[] args) => AbstactSortFactory.Create("Sort.Inserted", args[0].ToString(), args[1].ToString()))
+        , (object[] args) => new SortInserted(args[0].ToString(), args[1].ToString()))
     .Execute();
 IoC.Resolve<ICommand>("IoC.Register", "Factory.SortMerged"
-        , (object[] args) => AbstactSortFactory.Create("Sort.Merged", args[0].ToString(), args[1].ToString()))
+        , (object[] args) => new SortMerged(args[0].ToString(), args[1].ToString()))
     .Execute();
 IoC.Resolve<ICommand>("IoC.Register", "Factory.SortSelected"
-        , (object[] args) => AbstactSortFactory.Create("Sort.Selected", args[0].ToString(), args[1].ToString()))
+        , (object[] args) => new SortSelected(args[0].ToString(), args[1].ToString()))
     .Execute();
 
-IoC.Resolve<AbstactSortFactory>("Factory.SortInserted", sourceArrayPath, resFolder + "result1.txt").Execute();
-IoC.Resolve<AbstactSortFactory>("Factory.SortMerged", sourceArrayPath, resFolder + "result2.txt").Execute();
-IoC.Resolve<AbstactSortFactory>("Factory.SortSelected", sourceArrayPath, resFolder + "result3.txt").Execute();
+IoC.Resolve<ICommand>("IoC.Register", "FactorySort"
+        , (object[] args) => AbstactSortFactory.Create(args[0].ToString(), args[1].ToString(), args[2].ToString()))
+    .Execute();
+
+IoC.Resolve<AbstactSortFactory>("FactorySort", "Factory.SortInserted", sourceArrayPath, resFolder + "result1.txt").Execute();
+IoC.Resolve<AbstactSortFactory>("FactorySort", "Factory.SortMerged", sourceArrayPath, resFolder + "result2.txt").Execute();
+IoC.Resolve<AbstactSortFactory>("FactorySort", "Factory.SortSelected", sourceArrayPath, resFolder + "result3.txt").Execute();
+
 
 /// вариант 2
 IoC.Resolve<ICommand>("IoC.Register", "Factory.Sort"
     , (object[] args) => new SortFactory(args[0].ToString(), args[1].ToString(), args[2].ToString()))
     .Execute();
 
-IoC.Resolve<SortFactory>("Factory.Sort", "Sort.Selected", sourceArrayPath, resFolder+"result1.txt").Execute();
-IoC.Resolve<SortFactory>("Factory.Sort", "Sort.Merged", sourceArrayPath, resFolder+"result2.txt").Execute();
-IoC.Resolve<SortFactory>("Factory.Sort", "Sort.Inserted", sourceArrayPath, resFolder+"result3.txt").Execute();
-
+IoC.Resolve<SortFactory>("Factory.Sort", "Sort.Inserted", sourceArrayPath, resFolder+"result21.txt").Execute();
+IoC.Resolve<SortFactory>("Factory.Sort", "Sort.Merged", sourceArrayPath, resFolder+"result22.txt").Execute();
+IoC.Resolve<SortFactory>("Factory.Sort", "Sort.Selected", sourceArrayPath, resFolder+"result23.txt").Execute();
 
 

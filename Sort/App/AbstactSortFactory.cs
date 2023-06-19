@@ -6,7 +6,8 @@ public abstract class AbstactSortFactory: ICommand
     private readonly string _sourceFilepath;
     private readonly string _resultFilePath;
 
-    public static AbstactSortFactory Create(string sortName, string sourceFilepath, string resultFilePath)
+    [Obsolete]
+    private static AbstactSortFactory CreateSwitch(string sortName, string sourceFilepath, string resultFilePath)
     {
         switch (sortName)
         {
@@ -19,6 +20,11 @@ public abstract class AbstactSortFactory: ICommand
             default:
                 throw new ArgumentOutOfRangeException(sortName);
         }
+    }
+    
+    public static AbstactSortFactory Create(string sortName, string sourceFilepath, string resultFilePath)
+    {
+        return IoC.Resolve<AbstactSortFactory>(sortName, sourceFilepath, resultFilePath);
     }
     
     protected AbstactSortFactory(string sortName, string sourceFilepath, string resultFilePath)
@@ -57,7 +63,7 @@ public class SortInserted: AbstactSortFactory
 
     protected override void Sort(int[] data)
     {
-        new SortInsertedCommand(data).Execute();
+        IoC.Resolve<ICommand>("Sort.Inserted", data).Execute();
     }
 }
 
@@ -69,7 +75,7 @@ public class SortMerged: AbstactSortFactory
 
     protected override void Sort(int[] data)
     {
-        new SortMergedCommand(data).Execute();
+        IoC.Resolve<ICommand>("Sort.Merged", data).Execute();
     }
 }
 
@@ -82,6 +88,6 @@ public class SortSelected: AbstactSortFactory
 
     protected override void Sort(int[] data)
     {
-        new SortSelectedCommand(data).Execute();
+        IoC.Resolve<ICommand>("Sort.Selected", data).Execute();
     }
 }
