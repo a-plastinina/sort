@@ -7,7 +7,7 @@ public abstract class AbstactSortFactory
 }
 public class SortInserted: AbstactSortFactory
 {
-    protected internal SortInserted()
+    public SortInserted()
     { }
 
     public override ICommand CreateCommand(int[] data)
