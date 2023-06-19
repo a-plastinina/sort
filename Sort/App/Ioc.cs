@@ -1,8 +1,6 @@
 using System;
 using System.Collections;
 
-public delegate T RegisteredDependency<T>(params object[] args);
-
 public class IoC
 {
     private static readonly Hashtable Container = new();
