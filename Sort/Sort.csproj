@@ -19,4 +19,8 @@
     <Folder Include="res\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Remove="App\AbstactSortable.cs" />
+  </ItemGroup>
+
 </Project>

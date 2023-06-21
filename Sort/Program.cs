@@ -1,48 +1,68 @@
 ﻿using Microsoft.Extensions.Configuration;
+using Sort.App;
+using Sort.Infrastructure;
 
 const int LENGTH = 50;
-const int MAX_VALUE = 100;
+const int MAX_VALUE = 200;
+
+RegisterDependency();
 
 IConfiguration config = new ConfigurationBuilder() 
     .AddJsonFile("appsettings.json")
     .Build();
 
 var sourceArrayPath = config["sourceArray"] ?? "";
-var resultArrayPath = config["resultArray"] ?? "";
-int[] unsortedArray = {};
+var resFolder = config["resFolder"] ?? ".\\";
 
-using (var file = new FileHelper(sourceArrayPath))
+using (var file = IoC.Resolve<FileHelper>("FileHelper", sourceArrayPath))
 {
     if (!File.Exists(sourceArrayPath))
     {
-        unsortedArray = ArrayHelper.CreateRandom(LENGTH, MAX_VALUE);
-        file.WriteArray("", unsortedArray);
-    }
-    else
-    {
-        unsortedArray = file.ReadArray();
+        file.WriteArray("", ArrayHelper.CreateRandom(LENGTH, MAX_VALUE));
     }
 }
 
-IoC.Resolve<ICommand>("IoC.Register", "Sort.Inserted", (object[] args) => new SortInsertedCommand((int[])args[0])).Execute();
-IoC.Resolve<ICommand>("IoC.Register", "Sort.Selected", (object[] args) => new SortSelectedCommand((int[])args[0])).Execute();
-IoC.Resolve<ICommand>("IoC.Register", "Sort.Merged", (object[] args) => new SortMergedCommand((int[])args[0])).Execute();
+IoC.Resolve<Application>("Application", "Sort.Inserted", sourceArrayPath, resFolder + "result1.txt")
+    .Run();
 
-IoC.Resolve<ICommand>("Sort.Inserted", unsortedArray).Execute();
-IoC.Resolve<ICommand>("Sort.Merged", unsortedArray).Execute();
-IoC.Resolve<ICommand>("Sort.Selected", unsortedArray).Execute();
+IoC.Resolve<Application>("Application", "Sort.Merged", sourceArrayPath, resFolder + "result2.txt")
+    .Run();
 
-IoC.Resolve<ICommand>("IoC.Register", "Adapter.Sort", (object[] args) => new SortableAdapter(args[0].ToString(), args[1].ToString())).Execute();
+IoC.Resolve<Application>("Application", "Sort.Selected", sourceArrayPath, resFolder + "result3.txt")
+    .Run();
 
-var sortAdapter = IoC.Resolve<SortableAdapter>("Adapter.Sort", sourceArrayPath, resultArrayPath);
-IoC.Resolve<ICommand>("IoC.Register", "Sort.Command", (object[] args) => new SortMergedCommand((int[])args[0])).Execute();
-sortAdapter.Execute();
+void RegisterDependency()
+{
+    IoC.Resolve<ICommand>("IoC.Register", "FileHelper"
+            , (object[] args) => new FileHelper(args[0].ToString()))
+        .Execute();
+    
+    IoC.Resolve<ICommand>("IoC.Register", "Sort.Inserted"
+            , (object[] args) => new SortInsertedCommand((int[])args[0]))
+        .Execute();
+    IoC.Resolve<ICommand>("IoC.Register", "Sort.Selected"
+            , (object[] args) => new SortSelectedCommand((int[])args[0]))
+        .Execute();
+    IoC.Resolve<ICommand>("IoC.Register", "Sort.Merged"
+            , (object[] args) => new SortMergedCommand((int[])args[0]))
+        .Execute();
 
-IoC.Resolve<ICommand>("IoC.Register", "Sort.Command", (object[] args) => new SortInsertedCommand((int[])args[0])).Execute();
-sortAdapter.Execute();
+    IoC.Resolve<ICommand>("IoC.Register", "Factory.Sort.Inserted"
+            , (object[] args) => new SortInserted())
+        .Execute();
+    IoC.Resolve<ICommand>("IoC.Register", "Factory.Sort.Merged"
+            , (object[] args) => new SortMerged())
+        .Execute();
+    IoC.Resolve<ICommand>("IoC.Register", "Factory.Sort.Selected"
+            , (object[] args) => new SortSelected())
+        .Execute();
 
-IoC.Resolve<ICommand>("IoC.Register", "Sort.Command", (object[] args) => new SortSelectedCommand((int[])args[0])).Execute();
-sortAdapter.Execute();
-
+    IoC.Resolve<ICommand>(
+            "IoC.Register"
+            , "Application"
+            , (object[] args) => new Application(args[0].ToString(), args[1].ToString(), args[2].ToString()))
+        .Execute();
+}
+    
 
 
