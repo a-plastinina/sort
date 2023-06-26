@@ -7,7 +7,17 @@
     &lt;TestAncestor&gt;&#xD;
       &lt;TestId&gt;NUnit3x::42475CE5-283C-40D1-A06A-1F92C0DC34CC::net7.0::Sort.Test.AbstractFactoryTest.TestCreateCommand&lt;/TestId&gt;&#xD;
       &lt;TestId&gt;NUnit3x::42475CE5-283C-40D1-A06A-1F92C0DC34CC::net7.0::Sort.Test.FactoryTest&lt;/TestId&gt;&#xD;
+      &lt;TestId&gt;NUnit3x::42475CE5-283C-40D1-A06A-1F92C0DC34CC::net7.0::Sort.Test.SortTest&lt;/TestId&gt;&#xD;
+      &lt;TestId&gt;NUnit3x::42475CE5-283C-40D1-A06A-1F92C0DC34CC::net7.0::Sort.Test.MatrixAggragateTest.CreateAdaptor&lt;/TestId&gt;&#xD;
+      &lt;TestId&gt;NUnit3x::42475CE5-283C-40D1-A06A-1F92C0DC34CC::net7.0::Sort.Test.MatrixRandomTest.CreateAdaptorTest&lt;/TestId&gt;&#xD;
+      &lt;TestId&gt;NUnit3x::42475CE5-283C-40D1-A06A-1F92C0DC34CC::net7.0::Sort.Test.MatrixRandomTest.ExecuteAdaptorTest&lt;/TestId&gt;&#xD;
+      &lt;TestId&gt;NUnit3x::42475CE5-283C-40D1-A06A-1F92C0DC34CC::net7.0::Sort.Test.MatrixRandomTest.Execute_CallsWriteMethodTwiceAndExecuteMethod&lt;/TestId&gt;&#xD;
+      &lt;TestId&gt;NUnit3x::42475CE5-283C-40D1-A06A-1F92C0DC34CC::net7.0::Sort.Test.MatrixApplicationTest.CreateTest&lt;/TestId&gt;&#xD;
+      &lt;TestId&gt;NUnit3x::42475CE5-283C-40D1-A06A-1F92C0DC34CC::net7.0::Sort.Test.MatrixApplicationTest.FailedCreateAdaptorTest&lt;/TestId&gt;&#xD;
+      &lt;TestId&gt;NUnit3x::42475CE5-283C-40D1-A06A-1F92C0DC34CC::net7.0::Sort.Test.MatrixApplicationTest.FailedCreate2AdaptorTest&lt;/TestId&gt;&#xD;
+      &lt;TestId&gt;NUnit3x::42475CE5-283C-40D1-A06A-1F92C0DC34CC::net7.0::Sort.Test.MatrixApplicationTest&lt;/TestId&gt;&#xD;
     &lt;/TestAncestor&gt;&#xD;
+    &lt;ProjectFile&gt;42475CE5-283C-40D1-A06A-1F92C0DC34CC/f:MatrixRandomTest.cs&lt;/ProjectFile&gt;&#xD;
   &lt;/Or&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
 	</wpf:ResourceDictionary>
