@@ -21,4 +21,8 @@
       <ProjectReference Include="..\Sort\Sort.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="res\" />
+    </ItemGroup>
+
 </Project>
