@@ -1,9 +1,9 @@
 # Адаптер
 
 [Matrix](App/Matrix)
-Клиент [Program.cs] вызывает программу [MatrixApplication.cs] через интерфейс [IAggregate.cs]
+Клиент [Program.cs] вызывает программу [MatrixApplication.cs] через интерфейс [IAggregatable.cs]
 
-[IAggregate.cs] имеет один метод Execute() - запускает сложение матриц
+[IAggregatable.cs] имеет один метод Execute() - запускает сложение матриц
 
 [MatrixApplication.cs] принимает на вход два интерфейса [IReader.cs] и [IWriter.cs] для чтения исходных матриц 
 и записи результата сложения
